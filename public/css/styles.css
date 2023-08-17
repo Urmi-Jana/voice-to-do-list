@@ -1,0 +1,17 @@
+html {
+    min-height: 100%;
+    position: relative;
+  }
+  
+  body{
+    background-color: antiquewhite;
+  }
+  
+  h1{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  p{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #123c69;
+  }

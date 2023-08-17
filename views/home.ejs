@@ -1,0 +1,20 @@
+<%- include('partials/header') %>
+
+<p>the list</p>
+
+
+<form class="" action="/" method="post">
+    <% for (const i in tasks){ %>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="flexCheckChecked" checked>
+        <label class="form-check-label" for="flexCheckChecked" name="task">
+            <%= tasks[i] %>
+        </label>
+    </div>
+    <% } %>
+    
+    <button class="btn btn-primary" type="submit" name="tasks" value="<%= tasks %>"> Submit</button>
+</form>
+    
+
+
