@@ -18,20 +18,20 @@ app.set('view engine', 'ejs');
 app.use(express.static("public"));
 
 const tasks = ['drink water', 'ask X to hang out']
-const text = tasks[0]
+const text = tasks[0] + tasks[1]
 const voice = '21m00Tcm4TlvDq8ikWAM'
 
 app.get('/', function(req, res){
-    res.render('home', {tasks: tasks});
+    res.render('home', {tasks: tasks, url: ""});
     // console.log(req.body.task);
 })
 
 app.post('/', async function(req, res){
     console.log(req.body.tasks);
-    const voiceSettings = {
-        stability: 0.75,
-        similarity_boost: 0.75,
-    }
+    // const voiceSettings = {
+    //     stability: 0.75,
+    //     similarity_boost: 0.75,
+    // }
     
     try{
         // const response = await axios.post(
@@ -69,14 +69,15 @@ app.post('/', async function(req, res){
         )
         data = (response.data);
         url_index = (data.substring(data.indexOf('url')))
-        url = url_index.substring(0, url_index.indexOf(','))
+        const url = url_index.substring(6, url_index.indexOf(',')-1)
         console.log(url);
+        res.render('home', {tasks: tasks, url: url})
 
     }catch(error){
         console.log("error");
         console.log(error);
-    }    
-    res.redirect('/')
+        res.redirect('/')
+    }
 })
 
 app.listen(port, function () {

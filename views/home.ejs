@@ -1,6 +1,7 @@
 <%- include('partials/header') %>
 
 <p>the list</p>
+<a href= <%= url %>> click here</a>
 
 
 <form class="" action="/" method="post">
@@ -13,8 +14,11 @@
     </div>
     <% } %>
     
-    <button class="btn btn-primary" type="submit" name="tasks" value="<%= tasks %>"> Submit</button>
+    <button class="btn btn-primary" type="submit" name="tasks" value="<%= tasks %>"> What's on my list? </button>
 </form>
+<audio hidden controls autoplay>
+    <source src= <%= url %>  type="audio/mpeg">
+</audio>
     
 
 
