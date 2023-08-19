@@ -1,10 +1,15 @@
 const mongoose = require('mongoose')
 const express = require ('express')
+const fs = require('fs')
+const player = require('play-sound')(opts = {})
 const ejs = require('ejs')
 const port = process.env.PORT || 3000;
 const axios = require('axios')
+const env = require('dotenv').config()
 const voiceID = "21m00Tcm4TlvDq8ikWAM" //has to be changed
-const API = process.env.API
+// const API = process.env.API
+const KEY = process.env.KEY
+const USER_ID = process.env.USER_ID
 
 const app = express()
 app.use(express.urlencoded({extended: true}))
@@ -29,27 +34,48 @@ app.post('/', async function(req, res){
     }
     
     try{
+        // const response = await axios.post(
+        //     `https://api.elevenlabs.io/v1/text-to-speech/${voice}/stream`,
+        //     {
+        //         text: text,
+        //         voice_settings: voiceSettings,
+        //     },
+        //     {
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             accept: 'audio/mpeg',
+        //             'xi-api-key': API,
+        //         },
+        //         responseType: 'arraybuffer',
+        //     }
+        // )
+        // console.log(response.data);
+        // const audioBuffer = Buffer.from(response.data)
         const response = await axios.post(
-            `https://api.elevenlabs.io/v1/text-to-speech/${voice}`,
+            'https://play.ht/api/v2/tts',
             {
-                text: text,
-                voice_settings: voiceSettings,
+                'text': text,
+                'voice': 'larry'
+
             },
             {
-                headers: {
-                    'Content-Type': 'application/json',
-                    accept: 'audio/mpeg',
-                    'xi-api-key': API,
-                },
-                responseType: 'arraybuffer',
+                headers:{                    
+                    'Authorization': `Bearer ${KEY}`,
+                    'X-User-Id': `${USER_ID}`,
+                    'accept': 'text/event-stream',
+                    'Content-Type': 'application/json'
+                }
             }
         )
-        console.log(response.data);
-    }catch(error){
-        console.log(error.response);
-    }
+        data = (response.data);
+        url_index = (data.substring(data.indexOf('url')))
+        url = url_index.substring(0, url_index.indexOf(','))
+        console.log(url);
 
-    
+    }catch(error){
+        console.log("error");
+        console.log(error);
+    }    
     res.redirect('/')
 })
 
